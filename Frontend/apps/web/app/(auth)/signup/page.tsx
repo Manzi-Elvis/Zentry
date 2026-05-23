@@ -1,8 +1,27 @@
+"use client";
+
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { signupSchema, type SignupInput } from "@/lib/validations/auth";
 
 export default function SignupPage() {
+  const form = useForm<SignupInput>({
+    resolver: zodResolver(signupSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(values: SignupInput) {
+    console.log(values);
+  }
+
   return (
     <div className="rounded-3xl border bg-card p-8 shadow-sm">
       <div>
@@ -15,23 +34,41 @@ export default function SignupPage() {
         </p>
       </div>
 
-      <form className="mt-8 space-y-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-5">
         <div className="space-y-2">
           <label className="text-sm font-medium">Full name</label>
-          <Input type="text" placeholder="MANZI RURANGIRWA Elvis" />
+          <Input placeholder="MANZI RURANGIRWA Elvis" {...form.register("fullName")} />
+
+          {form.formState.errors.fullName && (
+            <p className="text-sm text-destructive">
+              {form.formState.errors.fullName.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Email</label>
-          <Input type="email" placeholder="name@example.com" />
+          <Input type="email" placeholder="name@example.com" {...form.register("email")} />
+
+          {form.formState.errors.email && (
+            <p className="text-sm text-destructive">
+              {form.formState.errors.email.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Password</label>
-          <Input type="password" placeholder="Create a strong password" />
+          <Input type="password" placeholder="Create a strong password" {...form.register("password")} />
+
+          {form.formState.errors.password && (
+            <p className="text-sm text-destructive">
+              {form.formState.errors.password.message}
+            </p>
+          )}
         </div>
 
-        <Button className="w-full">
+        <Button type="submit" className="w-full">
           Create account
         </Button>
       </form>
