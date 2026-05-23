@@ -1,8 +1,23 @@
+"use client";
+
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { loginSchema, type LoginInput } from "@/lib/validations/auth";
 
 export default function LoginPage() {
+      const form = useForm<LoginInput>({
+            resolver: zodResolver(loginSchema),
+            defaultValues: {
+                  email: "",
+                  password: "",
+            },
+      });
+      function onSubmit(values: LoginInput) {
+            console.log(values);
+      }
   return (
     <div className="rounded-3xl border bg-card p-8 shadow-sm">
       <div>
@@ -15,7 +30,7 @@ export default function LoginPage() {
         </p>
       </div>
 
-      <form className="mt-8 space-y-5">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-5">
         <div className="space-y-2">
           <label className="text-sm font-medium">
             Email
