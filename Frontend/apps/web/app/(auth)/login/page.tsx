@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
 
+import { toast } from "sonner";
+
 export default function LoginPage() {
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -17,8 +19,9 @@ export default function LoginPage() {
     },
   });
 
-  function onSubmit(values: LoginInput) {
+  async function onSubmit(values: LoginInput) {
     console.log(values);
+    toast.success("Login form submitted successfully.");
   }
 
   return (
