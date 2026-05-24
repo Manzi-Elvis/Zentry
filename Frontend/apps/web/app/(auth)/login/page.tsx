@@ -64,8 +64,8 @@ export default function LoginPage() {
           )}
         </div>
 
-        <Button type="submit" className="w-full">
-          Sign in
+        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? "Signing in..." : "Sign in"}
         </Button>
       </form>
 
