@@ -68,8 +68,8 @@ export default function SignupPage() {
           )}
         </div>
 
-        <Button type="submit" className="w-full">
-          Create account
+        <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? "Creating account..." : "Create account"}
         </Button>
       </form>
 
