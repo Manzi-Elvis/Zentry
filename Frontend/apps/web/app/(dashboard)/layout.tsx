@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import { MobileDashboardNav } from "@/components/layout/mobile-dashboard-nav";
+import { UserMenu } from "@/components/layout/user-menu";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: Home },
@@ -70,13 +71,10 @@ export default function DashboardLayout({
           <header className="flex h-16 items-center justify-between border-b px-4 sm:px-6">
             <div className="flex items-center gap-3">
               <MobileDashboardNav />
-
               <p className="text-sm text-muted-foreground">Workspace</p>
             </div>
 
-            <div className="rounded-full border px-3 py-1 text-sm">
-              Elvis
-            </div>
+            <UserMenu />
           </header>
 
           <div className="flex-1">{children}</div>
