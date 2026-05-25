@@ -1,12 +1,14 @@
 import Link from "next/link";
 import {
   BarChart3,
+  Bell,
   CreditCard,
   Home,
   ReceiptText,
   Send,
   Settings,
   ShieldCheck,
+  UsersRound,
   Wallet,
 } from "lucide-react";
 
@@ -19,6 +21,8 @@ const navItems = [
   { label: "Transactions", href: "/dashboard/transactions", icon: CreditCard },
   { label: "Invoices", href: "/dashboard/invoices", icon: ReceiptText },
   { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+  { label: "Team", href: "/dashboard/team", icon: UsersRound },
+  { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
   { label: "Security", href: "/dashboard/security", icon: ShieldCheck },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
@@ -67,9 +71,7 @@ export default function DashboardLayout({
             <div className="flex items-center gap-3">
               <MobileDashboardNav />
 
-              <p className="text-sm text-muted-foreground">
-                Workspace
-              </p>
+              <p className="text-sm text-muted-foreground">Workspace</p>
             </div>
 
             <div className="rounded-full border px-3 py-1 text-sm">
@@ -77,9 +79,7 @@ export default function DashboardLayout({
             </div>
           </header>
 
-          <div className="flex-1">
-            {children}
-          </div>
+          <div className="flex-1">{children}</div>
         </section>
       </div>
     </main>
