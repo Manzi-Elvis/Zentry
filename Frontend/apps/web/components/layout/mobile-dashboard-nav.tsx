@@ -14,7 +14,13 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const navItems = [
   { label: "Dashboard", href: "/dashboard", icon: Home },
@@ -37,11 +43,9 @@ export function MobileDashboardNav() {
       </SheetTrigger>
 
       <SheetContent side="left" className="w-72 p-0">
-        <div className="flex h-16 items-center border-b px-6">
-          <Link href="/dashboard" className="text-xl font-bold tracking-tight">
-            Zentry
-          </Link>
-        </div>
+        <SheetHeader className="border-b px-6 py-4 text-left">
+          <SheetTitle>Zentry</SheetTitle>
+        </SheetHeader>
 
         <nav className="space-y-1 p-4">
           {navItems.map((item) => {
