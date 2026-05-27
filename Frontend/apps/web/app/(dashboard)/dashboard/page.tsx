@@ -1,5 +1,9 @@
 import { CreditCard, Send, ShieldCheck, Wallet } from "lucide-react";
 
+import { DashboardContainer } from "@/components/dashboard/dashboard-container";
+import { PageHeader } from "@/components/dashboard/page-header";
+import { StatCard } from "@/components/dashboard/stat-card";
+
 const stats = [
   {
     title: "Total balance",
@@ -27,112 +31,85 @@ const stats = [
   },
 ];
 
+const wallets = [
+  { name: "USD Wallet", description: "Available balance", value: "$8,240.50" },
+  { name: "EUR Wallet", description: "Available balance", value: "€2,180.00" },
+  { name: "GBP Wallet", description: "Available balance", value: "£1,150.00" },
+  { name: "RWF Wallet", description: "Available balance", value: "RWF 1,650,000" },
+];
+
 const transactions = [
-  {
-    name: "Freelance payout",
-    amount: "+$2,400.00",
-    status: "Completed",
-  },
-  {
-    name: "Currency conversion",
-    amount: "-$320.00",
-    status: "Completed",
-  },
-  {
-    name: "Client invoice",
-    amount: "+$980.00",
-    status: "Pending",
-  },
+  { name: "Freelance payout", status: "Completed", amount: "+$2,400.00" },
+  { name: "Currency conversion", status: "Completed", amount: "-$320.00" },
+  { name: "Client invoice", status: "Pending", amount: "+$980.00" },
 ];
 
 export default function DashboardPage() {
   return (
-    <main className="px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div>
-          <p className="text-sm text-muted-foreground">Welcome back</p>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-            Financial dashboard
-          </h1>
-        </div>
+    <DashboardContainer>
+      <PageHeader
+        label="Welcome back"
+        title="Financial dashboard"
+        description="Track balances, transfers, wallet activity, and security from one clean workspace."
+      />
 
-        <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {stats.map((stat) => {
-            const Icon = stat.icon;
+      <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {stats.map((stat) => (
+          <StatCard key={stat.title} {...stat} />
+        ))}
+      </section>
 
-            return (
-              <div key={stat.title} className="rounded-2xl border bg-card p-5 shadow-sm">
-                <div className="flex items-center justify-between">
-                  <p className="text-sm text-muted-foreground">{stat.title}</p>
-                  <Icon className="size-5 text-muted-foreground" />
-                </div>
+      <section className="mt-8 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+        <div className="rounded-2xl border bg-card p-6 shadow-sm">
+          <h2 className="text-lg font-semibold">Wallet overview</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Your active balances across currencies.
+          </p>
 
-                <p className="mt-4 text-2xl font-bold">{stat.value}</p>
-                <p className="mt-1 text-sm text-muted-foreground">{stat.description}</p>
-              </div>
-            );
-          })}
-        </section>
-
-        <section className="mt-8 grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <div className="rounded-2xl border bg-card p-6 shadow-sm">
-            <div>
-              <h2 className="text-lg font-semibold">Wallet overview</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Your active balances across currencies.
-              </p>
-            </div>
-
-            <div className="mt-6 space-y-4">
-              {["USD", "EUR", "GBP", "RWF"].map((currency, index) => (
-                <div
-                  key={currency}
-                  className="flex items-center justify-between rounded-xl border bg-background px-4 py-3"
-                >
-                  <div>
-                    <p className="font-medium">{currency} Wallet</p>
-                    <p className="text-sm text-muted-foreground">Available balance</p>
-                  </div>
-
-                  <p className="font-semibold">
-                    {index === 0 && "$8,240.50"}
-                    {index === 1 && "€2,180.00"}
-                    {index === 2 && "£1,150.00"}
-                    {index === 3 && "RWF 1,650,000"}
+          <div className="mt-6 space-y-4">
+            {wallets.map((wallet) => (
+              <div
+                key={wallet.name}
+                className="flex items-center justify-between gap-4 rounded-xl border bg-background px-4 py-3"
+              >
+                <div>
+                  <p className="font-medium">{wallet.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {wallet.description}
                   </p>
                 </div>
-              ))}
-            </div>
+
+                <p className="text-right font-semibold">{wallet.value}</p>
+              </div>
+            ))}
           </div>
+        </div>
 
-          <div className="rounded-2xl border bg-card p-6 shadow-sm">
-            <div>
-              <h2 className="text-lg font-semibold">Recent activity</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Latest financial movements.
-              </p>
-            </div>
+        <div className="rounded-2xl border bg-card p-6 shadow-sm">
+          <h2 className="text-lg font-semibold">Recent activity</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Latest financial movements.
+          </p>
 
-            <div className="mt-6 space-y-4">
-              {transactions.map((transaction) => (
-                <div
-                  key={transaction.name}
-                  className="flex items-center justify-between rounded-xl border bg-background px-4 py-3"
-                >
-                  <div>
-                    <p className="font-medium">{transaction.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {transaction.status}
-                    </p>
-                  </div>
-
-                  <p className="font-semibold">{transaction.amount}</p>
+          <div className="mt-6 space-y-4">
+            {transactions.map((transaction) => (
+              <div
+                key={transaction.name}
+                className="flex items-center justify-between gap-4 rounded-xl border bg-background px-4 py-3"
+              >
+                <div>
+                  <p className="font-medium">{transaction.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {transaction.status}
+                  </p>
                 </div>
-              ))}
-            </div>
+
+                <p className="font-semibold">{transaction.amount}</p>
+              </div>
+            ))}
           </div>
-        </section>
-      </div>
-    </main>
+        </div>
+      </section>
+    </DashboardContainer>
   );
 }
