@@ -1,15 +1,19 @@
 import { Bell, Building2, UserRound } from "lucide-react";
+
+import { DashboardContainer } from "@/components/dashboard/dashboard-container";
+import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function SettingsPage() {
   return (
-    <main className="px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-4xl">
-        <p className="text-sm text-muted-foreground">Settings</p>
-        <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-          Account settings
-        </h1>
+    <DashboardContainer>
+      <div className="max-w-4xl">
+        <PageHeader
+          label="Settings"
+          title="Account settings"
+          description="Manage profile, business details, notification preferences, and workspace settings."
+        />
 
         <section className="mt-8 space-y-6">
           <div className="rounded-2xl border bg-card p-6 shadow-sm">
@@ -45,11 +49,11 @@ export default function SettingsPage() {
             </div>
 
             <p className="mt-3 text-sm text-muted-foreground">
-              Payment alerts, security updates, and account activity notifications are enabled.
+              Payment alerts, security updates, account activity, and risk alerts are enabled.
             </p>
           </div>
         </section>
       </div>
-    </main>
+    </DashboardContainer>
   );
 }
