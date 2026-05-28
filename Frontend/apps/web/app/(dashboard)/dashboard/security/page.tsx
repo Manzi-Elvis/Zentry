@@ -1,45 +1,41 @@
-import { LockKeyhole, ShieldCheck, Smartphone, KeyRound } from "lucide-react";
+import { KeyRound, LockKeyhole, ShieldCheck, Smartphone } from "lucide-react";
+
+import { DashboardContainer } from "@/components/dashboard/dashboard-container";
+import { PageHeader } from "@/components/dashboard/page-header";
+import { StatCard } from "@/components/dashboard/stat-card";
 import { Button } from "@/components/ui/button";
 
-const items = [
-  { title: "MFA", status: "Enabled", icon: ShieldCheck },
-  { title: "Passkeys", status: "Ready", icon: KeyRound },
-  { title: "Device control", status: "2 devices", icon: Smartphone },
-  { title: "Session security", status: "Protected", icon: LockKeyhole },
+const securityItems = [
+  { title: "MFA", value: "Enabled", description: "Extra protection on sign in", icon: ShieldCheck },
+  { title: "Passkeys", value: "Ready", description: "Modern passwordless access", icon: KeyRound },
+  { title: "Devices", value: "2", description: "Trusted active devices", icon: Smartphone },
+  { title: "Sessions", value: "Protected", description: "Secure session monitoring", icon: LockKeyhole },
 ];
 
 export default function SecurityPage() {
   return (
-    <main className="px-4 py-6 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <p className="text-sm text-muted-foreground">Security</p>
-        <h1 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-          Account protection
-        </h1>
+    <DashboardContainer>
+      <PageHeader
+        label="Security"
+        title="Account protection"
+        description="Manage authentication, trusted devices, sessions, and risk controls."
+      />
 
-        <section className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {items.map((item) => {
-            const Icon = item.icon;
+      <section className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {securityItems.map((item) => (
+          <StatCard key={item.title} {...item} />
+        ))}
+      </section>
 
-            return (
-              <div key={item.title} className="rounded-2xl border bg-card p-5 shadow-sm">
-                <Icon className="size-5 text-muted-foreground" />
-                <h2 className="mt-5 font-semibold">{item.title}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">{item.status}</p>
-              </div>
-            );
-          })}
-        </section>
+      <section className="mt-8 rounded-2xl border bg-card p-6 shadow-sm">
+        <h2 className="text-lg font-semibold">Security recommendations</h2>
+        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+          Your account is currently protected. Keep MFA enabled, review trusted
+          devices regularly, and monitor account activity for unusual behavior.
+        </p>
 
-        <section className="mt-8 rounded-2xl border bg-card p-6 shadow-sm">
-          <h2 className="text-lg font-semibold">Security recommendations</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Your account is protected. Keep MFA enabled and review devices regularly.
-          </p>
-
-          <Button className="mt-6">Review security</Button>
-        </section>
-      </div>
-    </main>
+        <Button className="mt-6">Review security settings</Button>
+      </section>
+    </DashboardContainer>
   );
 }
