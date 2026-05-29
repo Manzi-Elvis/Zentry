@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LogOut, Settings, ShieldCheck, UserRound } from "lucide-react";
 import { toast } from "sonner";
+import { clearDemoAuth } from "@/lib/auth/demo-auth";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +20,7 @@ export function UserMenu() {
   const router = useRouter();
 
   function logout() {
+    clearDemoAuth();
     toast.success("Logged out successfully.");
     router.push("/login");
   }
