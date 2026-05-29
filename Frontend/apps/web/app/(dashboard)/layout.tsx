@@ -1,14 +1,27 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { DashboardNav } from "@/components/layout/dashboard-nav";
 import { MobileDashboardNav } from "@/components/layout/mobile-dashboard-nav";
 import { UserMenu } from "@/components/layout/user-menu";
+import { isDemoAuthenticated } from "@/lib/auth/demo-auth";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isDemoAuthenticated()) {
+      router.push("/login");
+    }
+  }, [router]);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="grid min-h-screen lg:grid-cols-[280px_1fr]">
