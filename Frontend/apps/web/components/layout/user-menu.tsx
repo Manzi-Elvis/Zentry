@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { LogOut, Settings, ShieldCheck, UserRound } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +16,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function UserMenu() {
+  const router = useRouter();
+
+  function logout() {
+    toast.success("Logged out successfully.");
+    router.push("/login");
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -55,7 +64,7 @@ export function UserMenu() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="text-destructive">
+        <DropdownMenuItem onClick={logout} className="text-destructive">
           <LogOut className="mr-2 size-4" />
           Log out
         </DropdownMenuItem>
