@@ -1,10 +1,22 @@
+"use client";
+
+import { useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Plus, Wallet } from "lucide-react";
+import { toast } from "sonner";
 
 import { DashboardContainer } from "@/components/dashboard/dashboard-container";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-const wallets = [
+type WalletItem = {
+  currency: string;
+  name: string;
+  balance: string;
+  status: string;
+};
+
+const initialWallets: WalletItem[] = [
   { currency: "USD", name: "US Dollar Wallet", balance: "$8,240.50", status: "Active" },
   { currency: "EUR", name: "Euro Wallet", balance: "€2,180.00", status: "Active" },
   { currency: "GBP", name: "British Pound Wallet", balance: "£1,150.00", status: "Active" },
@@ -12,19 +24,63 @@ const wallets = [
 ];
 
 export default function WalletsPage() {
+  const [wallets, setWallets] = useState(initialWallets);
+  const [currency, setCurrency] = useState("");
+
+  function addWallet() {
+    const cleanCurrency = currency.trim().toUpperCase();
+
+    if (!cleanCurrency) {
+      toast.error("Enter a currency code.");
+      return;
+    }
+
+    const exists = wallets.some((wallet) => wallet.currency === cleanCurrency);
+
+    if (exists) {
+      toast.error("This wallet already exists.");
+      return;
+    }
+
+    setWallets((current) => [
+      ...current,
+      {
+        currency: cleanCurrency,
+        name: `${cleanCurrency} Wallet`,
+        balance: `${cleanCurrency} 0.00`,
+        status: "Active",
+      },
+    ]);
+
+    setCurrency("");
+    toast.success(`${cleanCurrency} wallet created.`);
+  }
+
   return (
     <DashboardContainer>
       <PageHeader
         label="Wallets"
         title="Multi-currency wallets"
         description="Hold, manage, send, and receive money across multiple currencies."
-        action={
-          <Button>
+      />
+
+      <section className="mt-8 rounded-2xl border bg-card p-5 shadow-sm">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+          <div className="flex-1 space-y-2">
+            <label className="text-sm font-medium">Create wallet</label>
+            <Input
+              value={currency}
+              onChange={(event) => setCurrency(event.target.value)}
+              placeholder="Example: KES"
+            />
+          </div>
+
+          <Button onClick={addWallet}>
             <Plus className="mr-2 size-4" />
             Add wallet
           </Button>
-        }
-      />
+        </div>
+      </section>
 
       <section className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {wallets.map((wallet) => (
