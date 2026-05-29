@@ -1,4 +1,8 @@
+"use client";
+
+import { useState } from "react";
 import { Bell, Building2, UserRound } from "lucide-react";
+import { toast } from "sonner";
 
 import { DashboardContainer } from "@/components/dashboard/dashboard-container";
 import { PageHeader } from "@/components/dashboard/page-header";
@@ -6,6 +10,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function SettingsPage() {
+  const [profile, setProfile] = useState({
+    name: "Elvis Manzi",
+    email: "elvis@example.com",
+    business: "Zentry Labs",
+    country: "Rwanda",
+  });
+
+  function saveSettings() {
+    toast.success("Settings saved successfully.");
+  }
+
   return (
     <DashboardContainer>
       <div className="max-w-4xl">
@@ -23,11 +38,32 @@ export default function SettingsPage() {
             </div>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <Input placeholder="Full name" defaultValue="Elvis Manzi" />
-              <Input placeholder="Email" defaultValue="elvis@example.com" />
+              <Input
+                value={profile.name}
+                onChange={(event) =>
+                  setProfile((current) => ({
+                    ...current,
+                    name: event.target.value,
+                  }))
+                }
+                placeholder="Full name"
+              />
+
+              <Input
+                value={profile.email}
+                onChange={(event) =>
+                  setProfile((current) => ({
+                    ...current,
+                    email: event.target.value,
+                  }))
+                }
+                placeholder="Email"
+              />
             </div>
 
-            <Button className="mt-6">Save changes</Button>
+            <Button className="mt-6" onClick={saveSettings}>
+              Save profile
+            </Button>
           </div>
 
           <div className="rounded-2xl border bg-card p-6 shadow-sm">
@@ -37,9 +73,32 @@ export default function SettingsPage() {
             </div>
 
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              <Input placeholder="Business name" />
-              <Input placeholder="Country" defaultValue="Rwanda" />
+              <Input
+                value={profile.business}
+                onChange={(event) =>
+                  setProfile((current) => ({
+                    ...current,
+                    business: event.target.value,
+                  }))
+                }
+                placeholder="Business name"
+              />
+
+              <Input
+                value={profile.country}
+                onChange={(event) =>
+                  setProfile((current) => ({
+                    ...current,
+                    country: event.target.value,
+                  }))
+                }
+                placeholder="Country"
+              />
             </div>
+
+            <Button className="mt-6" variant="outline" onClick={saveSettings}>
+              Save business details
+            </Button>
           </div>
 
           <div className="rounded-2xl border bg-card p-6 shadow-sm">
