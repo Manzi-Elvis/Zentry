@@ -1,58 +1,36 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { DashboardContainer } from "@/components/dashboard/dashboard-container";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Input } from "@/components/ui/input";
-
-const transactions = [
-  {
-    id: "TXN-1001",
-    name: "Freelance payout",
-    type: "Incoming",
-    amount: "+$2,400.00",
-    status: "Completed",
-  },
-  {
-    id: "TXN-1002",
-    name: "Currency conversion",
-    type: "Exchange",
-    amount: "-$320.00",
-    status: "Completed",
-  },
-  {
-    id: "TXN-1003",
-    name: "Client invoice",
-    type: "Incoming",
-    amount: "+$980.00",
-    status: "Pending",
-  },
-  {
-    id: "TXN-1004",
-    name: "Team payout",
-    type: "Outgoing",
-    amount: "-$740.00",
-    status: "Completed",
-  },
-];
+import {
+  type DemoTransaction,
+  getTransactions,
+} from "@/lib/demo/demo-store";
 
 export default function TransactionsPage() {
   const [search, setSearch] = useState("");
+  const [transactions, setTransactions] = useState<DemoTransaction[]>([]);
+
+  useEffect(() => {
+    setTransactions(getTransactions());
+  }, []);
 
   const filteredTransactions = useMemo(() => {
     return transactions.filter((transaction) => {
       const text = `${transaction.id} ${transaction.name} ${transaction.type} ${transaction.status}`;
       return text.toLowerCase().includes(search.toLowerCase());
     });
-  }, [search]);
+  }, [search, transactions]);
 
   return (
     <DashboardContainer>
       <PageHeader
         label="Transactions"
         title="Transaction history"
-        description="Search and review transfers, conversions, payments, and account movements."
+        description="Search and review demo transfers, conversions, payments, and account movements."
       />
 
       <section className="mt-8 rounded-2xl border bg-card p-5 shadow-sm">
