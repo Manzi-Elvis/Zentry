@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { setDemoAuth } from "@/lib/auth/demo-auth";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,9 +24,10 @@ export default function LoginPage() {
 
   async function onSubmit(values: LoginInput) {
     console.log(values);
+    setDemoAuth();
     toast.success("Signed in successfully.");
     router.push("/dashboard");
-  }
+}
 
   return (
     <div className="rounded-3xl border bg-card p-8 shadow-sm">
