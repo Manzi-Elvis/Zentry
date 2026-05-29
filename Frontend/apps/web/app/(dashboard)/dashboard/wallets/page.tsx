@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowDownLeft, ArrowUpRight, Plus, Wallet } from "lucide-react";
 import { toast } from "sonner";
 
@@ -8,24 +8,19 @@ import { DashboardContainer } from "@/components/dashboard/dashboard-container";
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-type WalletItem = {
-  currency: string;
-  name: string;
-  balance: string;
-  status: string;
-};
-
-const initialWallets: WalletItem[] = [
-  { currency: "USD", name: "US Dollar Wallet", balance: "$8,240.50", status: "Active" },
-  { currency: "EUR", name: "Euro Wallet", balance: "€2,180.00", status: "Active" },
-  { currency: "GBP", name: "British Pound Wallet", balance: "£1,150.00", status: "Active" },
-  { currency: "RWF", name: "Rwandan Franc Wallet", balance: "RWF 1,650,000", status: "Active" },
-];
+import {
+  type DemoWallet,
+  getWallets,
+  saveWallets,
+} from "@/lib/demo/demo-store";
 
 export default function WalletsPage() {
-  const [wallets, setWallets] = useState(initialWallets);
+  const [wallets, setWallets] = useState<DemoWallet[]>([]);
   const [currency, setCurrency] = useState("");
+
+  useEffect(() => {
+    setWallets(getWallets());
+  }, []);
 
   function addWallet() {
     const cleanCurrency = currency.trim().toUpperCase();
@@ -35,23 +30,23 @@ export default function WalletsPage() {
       return;
     }
 
-    const exists = wallets.some((wallet) => wallet.currency === cleanCurrency);
-
-    if (exists) {
+    if (wallets.some((wallet) => wallet.currency === cleanCurrency)) {
       toast.error("This wallet already exists.");
       return;
     }
 
-    setWallets((current) => [
-      ...current,
+    const nextWallets = [
+      ...wallets,
       {
         currency: cleanCurrency,
         name: `${cleanCurrency} Wallet`,
         balance: `${cleanCurrency} 0.00`,
         status: "Active",
       },
-    ]);
+    ];
 
+    setWallets(nextWallets);
+    saveWallets(nextWallets);
     setCurrency("");
     toast.success(`${cleanCurrency} wallet created.`);
   }
