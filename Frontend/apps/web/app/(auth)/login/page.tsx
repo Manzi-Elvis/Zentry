@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -8,9 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
 
-import { toast } from "sonner";
-
 export default function LoginPage() {
+  const router = useRouter();
+
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -21,7 +23,8 @@ export default function LoginPage() {
 
   async function onSubmit(values: LoginInput) {
     console.log(values);
-    toast.success("Login form submitted successfully.");
+    toast.success("Signed in successfully.");
+    router.push("/dashboard");
   }
 
   return (
