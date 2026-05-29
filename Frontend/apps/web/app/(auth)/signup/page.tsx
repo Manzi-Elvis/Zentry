@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -8,9 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signupSchema, type SignupInput } from "@/lib/validations/auth";
 
-import { toast } from "sonner";
-
 export default function SignupPage() {
+  const router = useRouter();
+
   const form = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -22,7 +24,8 @@ export default function SignupPage() {
 
   async function onSubmit(values: SignupInput) {
     console.log(values);
-    toast.success("Signup form submitted successfully.");
+    toast.success("Account created successfully.");
+    router.push("/dashboard");
   }
 
   return (
@@ -40,7 +43,11 @@ export default function SignupPage() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-5">
         <div className="space-y-2">
           <label className="text-sm font-medium">Full name</label>
-          <Input placeholder="MANZI RURANGIRWA Elvis" {...form.register("fullName")} />
+
+          <Input
+            placeholder="MANZI RURANGIRWA Elvis"
+            {...form.register("fullName")}
+          />
 
           {form.formState.errors.fullName && (
             <p className="text-sm text-destructive">
@@ -51,7 +58,12 @@ export default function SignupPage() {
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Email</label>
-          <Input type="email" placeholder="name@example.com" {...form.register("email")} />
+
+          <Input
+            type="email"
+            placeholder="name@example.com"
+            {...form.register("email")}
+          />
 
           {form.formState.errors.email && (
             <p className="text-sm text-destructive">
@@ -62,7 +74,12 @@ export default function SignupPage() {
 
         <div className="space-y-2">
           <label className="text-sm font-medium">Password</label>
-          <Input type="password" placeholder="Create a strong password" {...form.register("password")} />
+
+          <Input
+            type="password"
+            placeholder="Create a strong password"
+            {...form.register("password")}
+          />
 
           {form.formState.errors.password && (
             <p className="text-sm text-destructive">
