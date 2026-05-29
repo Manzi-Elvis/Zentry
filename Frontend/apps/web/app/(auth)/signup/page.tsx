@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { setDemoAuth } from "@/lib/auth/demo-auth";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,6 +25,7 @@ export default function SignupPage() {
 
   async function onSubmit(values: SignupInput) {
     console.log(values);
+    setDemoAuth();
     toast.success("Account created successfully.");
     router.push("/dashboard");
   }
