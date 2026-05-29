@@ -3,15 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  BarChart3,
-  Bell,
   CreditCard,
   Home,
-  ReceiptText,
   Send,
   Settings,
   ShieldCheck,
-  UsersRound,
   Wallet,
 } from "lucide-react";
 
@@ -22,10 +18,6 @@ export const dashboardNavItems = [
   { label: "Wallets", href: "/dashboard/wallets", icon: Wallet },
   { label: "Payments", href: "/dashboard/payments", icon: Send },
   { label: "Transactions", href: "/dashboard/transactions", icon: CreditCard },
-  { label: "Invoices", href: "/dashboard/invoices", icon: ReceiptText },
-  { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-  { label: "Team", href: "/dashboard/team", icon: UsersRound },
-  { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
   { label: "Security", href: "/dashboard/security", icon: ShieldCheck },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
